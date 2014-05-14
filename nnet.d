@@ -21,8 +21,8 @@ void train(in string FileToTrain, ref int[][] weightMatrix)
   weights(weightMatrix, inMatrix);
   
   writefln("Trained %d lines.\n", count);
-  writeln("Weight Matrix length: ", weightMatrix.length);
-  writeln("Weight Matrix Line length: ", weightMatrix[0].length);
+debug  writeln("Weight Matrix length: ", weightMatrix.length);
+debug  writeln("Weight Matrix Line length: ", weightMatrix[0].length);
 
 //  writeln(inMatrix);
 }
@@ -30,7 +30,7 @@ void train(in string FileToTrain, ref int[][] weightMatrix)
 void readInFile(string locationToReadFrom,ref int maxEntries,ref int minEntries,
     ref int count,  ref int[][] inMatrix)
 {
-  writefln("\nI'm training %s",locationToReadFrom);
+  writefln("\nI'm reading %s",locationToReadFrom);
   auto file2readIn = File(locationToReadFrom);
 
   int[] bob = new int[0];
@@ -84,9 +84,8 @@ void weights(ref int[][] W,in int[][] X)
   foreach(k;0..W.length)
     W[k][k] = 0;
 
-  writeln("W: ");
-  foreach(line;0 .. W.length)
-    writeln(W[line]);
+debug  writeln("W: "); 
+debug  foreach(line;0 .. W.length) writeln(W[line]);
   
 }
 
@@ -152,19 +151,18 @@ void test(in string testFile, int[][] weightMatrix, ref int[][] trainMatrix)
   int countTest = 0;
 
   readInFile(testFile, minTestEntries, maxTestEntries, countTest, trainMatrix);
-  writeln("Train Matrix: ");
-  foreach(line;0 .. trainMatrix.length)
-    writeln(trainMatrix[line]);
+debug  writeln("Train Matrix: ");  
+debug foreach(line;0 .. trainMatrix.length) writeln(trainMatrix[line]);
     
   foreach(line; trainMatrix)
   {
     auto ob = line;
-    writeln(line);
+debug    writeln(line);
     int E = energy(weightMatrix, ob);
-    writefln("Energy of the initial configuration: %d",  E);
+debug    writefln("Energy of the initial configuration: %d",  E);
     
     int[] h = new int[](weightMatrix.length);
-    writeln("H has length: ",  h.length);
+debug    writeln("H has length: ",  h.length);
     int[] ob1 = ob.dup;
     
     int countOb = 0;
@@ -181,11 +179,11 @@ void test(in string testFile, int[][] weightMatrix, ref int[][] trainMatrix)
         else
           ob[point] = ob1[point];
       }
-      writefln("Energy of the configuration is: %d",  energy(weightMatrix, ob));
+debug      writefln("Energy of the configuration is: %d",  energy(weightMatrix, ob));
       result = check(ob, ob1);
       
       countOb++;
-      writefln("Count is: %d", countOb);
+debug      writefln("Count is: %d", countOb);
     }
     while ((countOb < 100) && (result != 1));
       
